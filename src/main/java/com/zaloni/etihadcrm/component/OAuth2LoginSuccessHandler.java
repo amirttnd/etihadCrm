@@ -25,19 +25,15 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) authentication;
-        OAuth2AuthorizedClient client = clientService.loadAuthorizedClient(
-                oauthToken.getAuthorizedClientRegistrationId(),
-                oauthToken.getName());
+        OAuth2AuthorizedClient client = clientService.loadAuthorizedClient(oauthToken.getAuthorizedClientRegistrationId(), oauthToken.getName());
         OAuth2AccessToken accessToken = client.getAccessToken();
-//        CookiesUtil.add("tokenValue", accessToken.getTokenValue(), response);
-//        CookiesUtil.add("tokenType", accessToken.getTokenValue(), response);
-//        CookiesUtil.add("tokenExpiresAt", accessToken.getExpiresAt().toString(), response);
-//        CookiesUtil.add("tokenIssuedAt", accessToken.getIssuedAt().toString(), response);
+        System.out.println(oauthToken.getName());
         System.out.println(accessToken.getTokenValue());
         System.out.println(accessToken.getTokenType().getValue());
         System.out.println(accessToken.getExpiresAt());
         System.out.println(accessToken.getIssuedAt());
         System.out.println(accessToken.getScopes());
+        System.out.println(client.getRefreshToken());
         super.onAuthenticationSuccess(request, response, authentication);
     }
 }
